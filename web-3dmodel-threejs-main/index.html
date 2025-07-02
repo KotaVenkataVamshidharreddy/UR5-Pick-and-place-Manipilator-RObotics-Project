@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Simple Three.JS App</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        header {
+            background: #333;
+            color: white;
+            padding: 1em;
+            text-align: center;
+        }
+        main {
+            display: flex;
+            flex: 1;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .content {
+            display: flex;
+            flex: 1;
+            padding: 20px;
+        }
+        .controls {
+            flex: 1;
+            background: #f4f4f4;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        .theta-inputs,
+        .slidecontainer,
+        .transformation-matrix {
+            margin-bottom: 20px;
+        }
+        .theta-inputs label,
+        .slidecontainer label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        .theta-inputs input[type="number"],
+        .theta-inputs button {
+            display: block;
+            margin-bottom: 10px;
+            width: 100%;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+        .slider {
+            width: 100%;
+        }
+        #simulation-frame {
+            flex: 3;
+            position: relative;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        #container3D {
+            width: 100%;
+            height: 100%;
+        }
+        .intro-box {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border: 1px solid #ccc;
+            z-index: 10;
+        }
+        .transformation-matrix pre {
+            background: #eaeaea;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 0;
+        }
+        .transformation-matrix {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>UR5 Arm</h1>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="content">
+                <div class="controls">
+
+                    <div class="slidecontainer">
+                
+                        <h3>Control Joints</h3>
+                        <label for="myRange_J1" class="slider-label">Base Joint - <span id="valueDisplay_J1">0</span><sup>o</sup></label>
+                        <input type="range" min="-10" max="10" class="slider" id="myRange_J1">
+
+                        <label for="myRange_J2_Plane003" class="slider-label">Shoulder Joint - <span id="valueDisplay_J2">0</span><sup>o</sup></label>
+                        <input type="range" min="-10" max="10" class="slider" id="myRange_J2_Plane003">
+
+                        <label for="myRange_J3_Cube" class="slider-label">Elbow Joint - <span id="valueDisplay_J3">0</span><sup>o</sup></label>
+                        <input type="range" min="-2" max="3" class="slider" id="myRange_J3_Cube">
+
+                        <label for="myRange_J4" class="slider-label">Wrist 1 Joint - <span id="valueDisplay_J4">0</span><sup>o</sup></label>
+                        <input type="range" min="-5" max="5" class="slider" id="myRange_J4">
+
+                        <label for="myRange_J5" class="slider-label">Wrist 2 Joint - <span id="valueDisplay_J5">0</span><sup>o</sup></label>
+                        <input type="range" min="-2" max="3" class="slider" id="myRange_J5">
+
+                        <label for="myRange_J6" class="slider-label">Wrist 3 Joint - <span id="valueDisplay_J6">0</span><sup>o</sup></label>
+                        <input type="range" min="-10" max="5" class="slider" id="myRange_J6">
+                        <button id="resetButton">Reset</button>
+                    </div>
+                </div>
+                <div id="simulation-frame">
+                    <div id="container3D"></div>
+                    <div class="intro-box">
+                        <h2>Robot Arm Control</h2>
+                        <p>Use the sliders to control the joints of the robot arm.</p>
+                    </div>
+                    <div class="transformation-matrix">
+                        <h3>Transformation Matrix</h3>
+                        <pre id="transformationMatrix">
+0.000 0.000 0.000 0.000
+0.000 0.000 0.000 0.000
+0.000 0.000 0.000 0.000
+0.000 0.000 0.000 0.000
+                        </pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
