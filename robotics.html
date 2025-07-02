@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robotics Final Project</title>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2E8B57;
+            --secondary-color: #98FB98;
+            --bg-color: #F0F0F0;
+            --text-color: #333333;
+            --button-color: #2E8B57;
+            --button-hover-color: #2f7aaf;
+            --heading1-color: #cc8932;
+            --heading2-color: #800000;
+            --button-bg-color: #FFFFFF;
+            --button-border-color: #2E8B57;
+            --container-bg-color: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: linear-gradient(to bottom, #e9e9e2, #093c30);
+            color: var(--text-color);
+            margin: 0;
+            padding: 80px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        h1, h2 {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            text-align: center;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            
+            font-size: 48px;
+            margin-bottom: 40px;
+            color: var(--heading1-color);
+        }
+
+        h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: var(--heading2-color);
+        }
+        p {
+            font-family: 'Times New Roman', Times, serif;
+        }
+        li{
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 17px;
+        }
+
+        .container {
+            display: flex;
+            max-width: 1200px;
+            width: 100%;
+            background: rgba(255,255,255,0.9);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            margin-top: 20px;
+        }
+
+        .functions {
+            width: 300px;
+            display: flex;
+            flex-direction: column;
+            background: var(--container-bg-color);
+            border-right: 1px solid #dee2e6;
+        }
+
+        .functions button {
+            background: var(--button-bg-color);
+            color: var(--button-color); /* This line defines the text color */
+            border: 1px solid var(--button-border-color);
+            border-bottom: none;
+            padding: 20px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 18px;
+            font-weight: 600;
+            font-family:Georgia, 'Times New Roman', Times, serif;
+            transition: all 0.3s ease;
+        }
+        
+        .functions button:hover {
+            background: var(--button-hover-color);
+            color: #fff;
+        }
+        
+        .functions button:last-child {
+            border-bottom: 1px solid var(--button-border-color);
+        }
+        
+
+        .tab-content {
+            flex-grow: 1;
+            padding: 40px;
+            background: var(--container-bg-color);
+            border-radius: 0 16px 16px 0;
+        }
+
+        .tab-content h2 {
+            margin-top: 0;
+        }
+
+        .tab-content p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        .show {
+            display: block;
+        }
+
+        .intro {
+            display: none;
+            background: var(--bg-color);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            position: absolute;
+            top: 80px;
+            left: 20px;
+            max-width: 300px;
+            z-index: 10;
+        }
+
+        .hamburger {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            z-index: 20;
+        }
+
+        .hamburger div {
+            width: 100%;
+            height: 4px;
+            background: var(--text-color);
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active div:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active div:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active div:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        @media (max-width: 767.98px) {
+            body {
+                padding: 60px 20px;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+
+            h2 {
+                font-size: 24px;
+                color: blanchedalmond;
+            }
+
+            .container {
+                flex-direction: column;
+                align-items: center;
+                margin-top: 20px;
+            }
+
+            .functions {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+
+            .tab-content {
+                width: 100%;
+                border-radius: 0 0 16px 16px;
+            }
+
+            .intro {
+                left: 50%;
+                transform: translateX(-50%);
+                top: 60px;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 20px 0;
+            }
+
+            table, th, td {
+                border: 1px solid #ddd;
+            }
+
+            th, td {
+                padding: 12px;
+                text-align: left;
+            }
+
+            th {
+                background-color: #f2f2f2;
+            }
+        
+        }
+        #content-simulation {
+            text-align: center;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 80%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .media-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .media-item {
+            max-width: 45%;
+            height: auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        .center-button {
+            display: block;
+            margin: 0 auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .center-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pick and Place using UR5</h1>
+    <div class="container">
+        <div class="functions">
+            <button id="aim">Aim</button>
+            <button id="introduction">Introduction</button>
+            <button id="theory">Theory</button>
+            <button id="procedure">Procedure</button>
+            <button id="simulation">Simulation</button>
+            <button id="references">References</button>
+            <button id="contributors">Contributors</button>
+            
+        </div>
+        <div class="tab-content">
+            <div id="content-aim" class="hide">
+                <h2>Aim</h2>
+                <p>The aim of my "UR5 Pick and Place" project is to develop a system that enables a UR5 robotic arm to autonomously perform pick and place operations with high precision. This involves several key objectives:</p>
+                <ul>
+                    <p><li>Creating a system that can autonomously handle objects, reducing the need for manual intervention and increasing operational efficiency.</li></p>
+                    <p><li>Ensuring the robot can precisely pick up objects from a designated location and place them accurately in another specified location.</li></p>
+                    <p><li>Using simulation tools like V-REP (CoppeliaSim) to test and validate the robot’s operations before deploying it in a real-world scenario.</li></p>
+                    <p><li>Implementing robust control algorithms to manage the movements and actions of the robotic arm effectively.</li></p>
+                    <p><li>Utilizing inverse kinematics methods with Jacobian matrices to calculate the necessary joint angles for precise end-effector positioning.</li></p>
+                    
+                </ul>
+                <p>The overall goal is to build a reliable and efficient robotic system that can automate repetitive tasks, enhance productivity, and ensure high precision in operations involving the UR5 robotic arm. This project leverages MATLAB for its development, taking advantage of its capabilities in robotics simulation, control, and inverse kinematics calculations.</p>
+            </div>
+            
+            <div id="content-introduction" class="hide">
+                <h2>Introduction</h2>
+                <p>The project involves the implementation and simulation of a pick-and-place operation using the UR5, a 6-DOF robotic arm, within a simulated industrial environment. Beginning with a comprehensive exploration of Forward Kinematics (FK) and delving into the intricacies of Inverse Kinematics (IK), particularly emphasizing the Jacobian method, I laid the theoretical groundwork. Translating these theories into practical implementations, I employed MATLAB for control and V-REP (CoppeliaSim) for simulation, ensuring seamless communication between the two platforms. The crux of the project lies in the utilization of Jacobian-based IK, enabling the computation of joint velocities necessary to achieve desired end-effector velocities, ensuring precision and efficiency in pick-and-place tasks. Culminating in a captivating demonstration, the UR5 adeptly executed pick-and-place maneuvers, showcasing the real-world applicability of the developed algorithms within a simulated industrial setting.</p>
+                <img src="images/UR5.jpg" alt="No Image" style="display: block; margin-left: auto; margin-right: auto; border: 2px solid black;width: 300px;">
+            </div>
+
+            <div id="content-theory" class="hide">
+                <h2>Theory</h2>
+                <p>The UR5 robotic arm, developed by Universal Robots, is a sophisticated piece of industrial automation equipment designed for versatility and ease of use in a variety of applications. This detailed theory covers the UR5's mechanical design, kinematics, dynamics, control systems, and potential applications.</p>
+                
+                <h3>1. Mechanical Design</h3>
+                <h4>1.1 Structure</h4>
+                <p>The UR5 robotic arm consists of six rotational joints, offering six degrees of freedom (DOF). This configuration allows for extensive flexibility and precision in positioning the end effector (the tool or gripper at the end of the arm). The main components are:</p>
+                <ul>
+                    <li><strong>Base Joint:</strong> Allows rotation around the vertical axis.</li>
+                    <li><strong>Shoulder Joint:</strong> Moves forwards and backwards.</li>
+                    <li><strong>Elbow Joint:</strong> Extends and retracts the arm.</li>
+                    <li><strong>Wrist 1 Joint:</strong> Provides rotation for the wrist.</li>
+                    <li><strong>Wrist 2 Joint:</strong> Adds further rotational capability to the wrist.</li>
+                    <li><strong>Wrist 3 Joint:</strong> Finalizes the orientation adjustments of the end effector.</li>
+                </ul>
+            
+                <h4>1.2 Materials and Build</h4>
+                <p>The UR5 is built with lightweight, durable materials, typically including aluminum and steel, which provide a balance of strength and mobility. The arm is designed to be compact, with a total weight of around 20 kg, making it easy to integrate into various work environments.</p>
+            
+                <p><strong>Forward Kinematics</strong></p>
+<p>The Denavit–Hartenberg parameters (also called DH parameters) are the four parameters associated with a particular convention for attaching reference frames to the links of a spatial kinematic chain, or robot manipulator. They are used in order to standardize the coordinate frames for spatial linkages. In this convention, coordinate frames are attached to the joints between two links such that one transformation is associated with the joint, [Z], and the second is associated with the link [X]. The coordinate transformations along a serial robot consisting of n links form the kinematics equations of the robot,</p>
+<p>[T] is the transformation locating the end-link.</p>
+
+<p>Reference frames below illustrate a common assignment of Denavit-Hartenberg convention to the UR5 robot (shown with all joint angles at 0).</p>
+<img src="images/1.png" alt="No Image" style="display: block; margin-left: auto; margin-right: auto; border: 2px solid black;width: 300px;">
+
+<img src="images/2.png" alt="No Image" style="display: block; margin-left: auto; margin-right: auto; border: 2px solid black;width: 300px;">
+<p>As with any 6-DOF robot, the homogeneous transformation from the base frame to the gripper can be defined as follows:</p>
+<img src="images/3.png" alt="No Image" style="display: block; margin-left: auto; margin-right: auto; border: 2px solid black;width: 300px;">
+
+<p>Also remember that a homogeneous transformation T<sub>j i</sub> has the following form:</p>
+<img src="images/4.png" alt="No Image" style="display: block; margin-left: auto; margin-right: auto; border: 2px solid black;width: 300px;">
+
+<p>where is the translation from frame i to frame j and each column of [T] is the projection of one of the axes of frame j onto the axes of frame i. The equations below form the transformation matrix for the Forward Kinematics of the UR5. In these equations, I have used the following notations:</p>
+<img src="images/5.png" alt="No Image" style="display: block; margin-left: auto; margin-right: auto; border: 2px solid black;width: 300px;">
+
+<p><strong>Jacobian Approach</strong></p>
+    <p>The inverse Jacobian approach is a well-established method in robotics for solving the inverse kinematics problem, which involves determining the joint angles required to achieve a desired position and orientation of the robot's end-effector. This method leverages the Jacobian matrix, which describes the relationship between joint velocities and end-effector velocities.</p>
+    
+    <p><strong>Jacobian Matrix</strong>
+    
+    <p>The Jacobian matrix <em>J</em> is a key concept in robot kinematics. It is a matrix of partial derivatives that relates the rates of change of the robot's joint parameters to the rates of change of the end-effector's position and orientation. Mathematically, for a robotic manipulator with <em>n</em> joints, the Jacobian <em>J</em> is defined such that:</p>
+    <p><em>&#x1D56B;</em><sub>x</sub> = <em>J</em> <em>&#x1D56B;</em>&#x1D6FC;</p>
+    <p>where <em>&#x1D56B;</em><sub>x</sub> is the vector of end-effector velocities and <em>&#x1D56B;</em>&#x1D6FC; is the vector of joint velocities.</p>
+    
+    <p><strong>Inverse Kinematics Problem</strong>
+    <p>The inverse kinematics problem involves finding the joint angles <em>&#x1D6FC;</em> that produce a desired end-effector position and orientation. Using the Jacobian matrix, we can express this problem in differential form. Given a small desired change in end-effector position <em>&#x394;x</em>, the corresponding change in joint angles <em>&#x394;&#x1D6FC;</em> can be approximated by:</p>
+    <p><em>&#x394;x</em> &#x2248; <em>J</em> <em>&#x394;&#x1D6FC;</em></p>
+    <p>To find <em>&#x394;&#x1D6FC;</em>, we need to invert the Jacobian matrix:</p>
+    <p><em>&#x394;&#x1D6FC;</em> = <em>J</em><sup>-1</sup> <em>&#x394;x</em></p>
+    <p>However, the Jacobian matrix is not always square and may not be directly invertible. In such cases, the Moore-Penrose pseudoinverse of the Jacobian, <em>J<sup>+</sup></em>, is used:</p>
+    <p><em>&#x394;&#x1D6FC;</em> = <em>J<sup>+</sup></em> <em>&#x394;x</em></p>
+    
+    <p><strong>Numerical Stability and Singularity Issues</strong>
+    <p>The inverse Jacobian approach is powerful but comes with challenges. One major issue is the singularity problem, where the Jacobian matrix loses rank and becomes non-invertible. Near singularities, the pseudoinverse can lead to very large joint velocities, causing instability and unrealistic joint configurations. To address this, methods like damped least squares (Levenberg-Marquardt algorithm) are employed. These methods modify the pseudoinverse calculation to add a damping factor, which helps in stabilizing the solution near singularities by ensuring that the joint velocities remain within reasonable limits.</p>
+    
+<p><strong>Damped Least Squares</strong></p>
+    <p>The damped least squares method avoids many of the pseudoinverse method’s problems with singularities and can give a numerically stable method of selecting ∆θ. It is also called the Levenberg-Marquardt method and was first used for inverse kinematics by Wampler [41] and Nakamura and Hanafusa [34].</p>
+    
+    <p>The damped least squares method can be theoretically justified as follows (see [42]). Rather than just finding the minimum vector ∆θ that gives a best solution to equation (5), we find the value of ∆θ that minimizes the quantity</p>
+    
+    <p style="text-align:center">||J∆θ − ~e||<sup>2</sup> + λ<sup>2</sup>||∆θ||<sup>2</sup>,</p>
+    
+    <p>where λ ∈ R is a non-zero damping constant. This is equivalent to minimizing the quantity</p>
+    
+    <p style="text-align:center">
+        <b>
+            <table>
+                <tr>
+                    <td>||</td>
+                    <td>
+                        <table>
+                            <tr><td>J</td></tr>
+                            <tr><td>λI</td></tr>
+                        </table>
+                    </td>
+                    <td>∆θ −</td>
+                    <td>
+                        <table>
+                            <tr><td>~e</td></tr>
+                            <tr><td>0</td></tr>
+                        </table>
+                    </td>
+                    <td>||</td>
+                </tr>
+            </table>
+        </b>
+    </p>
+    
+    <p>The corresponding normal equation is</p>
+    
+    <p style="text-align:center">
+        <b>
+            <table>
+                <tr>
+                    <td>
+                        <table>
+                            <tr><td>J</td></tr>
+                            <tr><td>λI</td></tr>
+                        </table>
+                    </td>
+                    <td><sup>T</sup></td>
+                    <td>
+                        <table>
+                            <tr><td>J</td></tr>
+                            <tr><td>λI</td></tr>
+                        </table>
+                    </td>
+                    <td>∆θ =</td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td>J</td>
+                            </tr>
+                            <tr>
+                                <td>λI</td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td><sup>T</sup></td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td>~e</td>
+                            </tr>
+                            <tr>
+                                <td>0</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </b>
+    </p>
+    
+    <p>This can be equivalently rewritten as</p>
+    
+    <p style="text-align:center">(JT J + λ<sup>2</sup>I)∆θ = JT~e.</p>
+    
+    <p>It can be shown (by the methods of section 6 below) that JT J + λ<sup>2</sup>I is non-singular. Thus, the damped least squares solution is equal to</p>
+    
+    <p style="text-align:center">∆θ = (JT J + λ<sup>2</sup>I)<sup>−1</sup>JT~e.</p>
+    
+    <p>Now JT J is an n × n matrix, where n is the number of degrees of freedom. It is easy to show that (JT J + λ<sup>2</sup>I)<sup>−1</sup>JT = JT (JJT + λ<sup>2</sup>I)<sup>−1</sup>. Thus,</p>
+    
+    <p style="text-align:center">∆θ = JT (JJT + λ<sup>2</sup>I)<sup>−1</sup>~e.</p>
+    
+    <p>The advantage of equation (11) over (10) is that the matrix being inverted is only m × m where m = 3k is the dimension of the space of target positions, and m is often much less than n.</p>
+    
+    <p>Additionally, (11) can be computed without needing to carry out the matrix inversion, instead row operations can find ~f such that (JJT + λ<sup>2</sup>I)~f = ~e and then JT~f is the solution.</p>
+    
+    <p>The damping constant depends on the details of the multibody and the target positions and must be chosen carefully to make equation (11) numerically stable. The damping constant should be large enough so that the solutions for ∆θ are well-behaved near singularities, but if it is chosen too large, then the convergence rate is too slow.</p>
+</body>
+            </div>
+
+
+
+            <div id="content-procedure" class="hide">
+                <h2>Procedure</h2>
+                <h1>Simulation Process</h1>
+
+    <h2>Initialization and Connection Setup</h2>
+    <p>In this phase, the environment is prepared by including necessary paths to the directories containing helper functions and V-REP API functions. The V-REP remote API is initialized and a connection is established. If the connection attempt fails, the program exits.</p>
+
+    <h2>Object Handles Acquisition</h2>
+    <p>This phase involves obtaining unique identifiers (handles) for various objects in the V-REP environment. These objects include the UR5 robot joints, cuboids, tables, and reference frames. Handles are essential for interacting with and controlling these objects within the simulation.</p>
+
+    <h2>Data Streaming Setup</h2>
+    <p>Here, continuous streaming of data is set up for the positions and orientations of the cuboids and tables relative to the base frame. Additionally, the positions of the UR5 robot joints and the gripper joint are streamed. This continuous data flow is crucial for real-time monitoring and control of the robot and objects in the simulation.</p>
+
+    <h2>Simulation Start</h2>
+    <p>The simulation is started in V-REP. The robot's joint positions are initialized to a starting configuration. This ensures that the robot begins the simulation in a known state, allowing for consistent and predictable behavior during the subsequent tasks.</p>
+
+    <h2>Singularity Check</h2>
+    <p>Before performing any operations, the code calculates the Jacobian matrix for the current joint configuration of the robot. It then checks for singularities by evaluating the condition number of the Jacobian matrix. If the condition number exceeds a certain threshold, it indicates that the robot is near a singularity, which could lead to control issues. A warning is issued if a singularity is detected.</p>
+
+    <h2>Pick and Place Operation</h2>
+    <p>This phase involves defining and executing a series of pick-and-place tasks. The robot is instructed to pick up cuboids from predefined locations and place them on designated tables. Specific positions and offsets are set for the cuboids and tables to guide the robot's movements. Functions are used to perform the actions of picking up and placing the cuboids, ensuring precise and controlled execution of the tasks.</p>
+
+    <h2>Simulation End</h2>
+    <p>After completing the pick-and-place tasks, the simulation is stopped. The connection to the V-REP remote API is terminated, and any resources allocated during the simulation are cleaned up. This ensures that the simulation ends gracefully and that the system is ready for the next run.</p>
+
+    <h2>Utility Functions</h2>
+    <p>Throughout the process, utility functions are used to perform specific tasks such as checking for singularities, moving the robot to pick up or place objects, and adjusting the positions of frames in the simulation. These functions encapsulate common operations, making the main code more modular and easier to manage.</p>
+
+    <p>In summary, the code systematically sets up and runs a simulation in V-REP, involving initialization, data streaming, performing pick-and-place tasks, and cleaning up resources. Each phase is designed to ensure that the robot operates smoothly and safely within the simulated environment.</p>
+            </div>
+            
+            <div id="content-simulation" class="hide">
+                <h2>Simulation</h2>
+                
+                
+                <figure class="media-container">
+                    <img src="images/UR5.jpg" alt="Simulation Image" class="media-item" id="simulationImage" onclick="window.open('http://127.0.0.1:5500/web-3dmodel-threejs-main/index.html');" style="display: block; margin: 0 auto; max-width: 200px;">
+                    <figcaption>
+                        <a href="images/video.mp4">
+                            <img src="images/pic.png" alt="Image 2" class="media-item" id="image2" style="display: block; margin: 0 auto; max-width: 200px;">
+                        </a>
+                    </figcaption>
+                </figure>
+                
+                <button class="center-button" onclick="window.open('http://127.0.0.1:5500/');">Download pick and place simulation file</button>
+            </div>
+            
+            <div id="content-references" class="hide">
+                <h2>References</h2>
+                <p>https://mathweb.ucsd.edu/~sbuss/ResearchWeb/ikmethods/iksurvey.pdf</p>
+                <p>https://www.wiredworkers.io/cobot/brands/universal-robots/ur5/</p>
+            </div> <!-- Closing div tag added here -->
+        
+            <div id="content-contributors" class="hide">
+                <h2>Contributors</h2>
+                <table bgcolor="black" width="700">
+                    <thead>
+                        <tr bgcolor="grey" width="700">
+                            <th>S.No</th>
+                            <th>Name</th>
+                            <th>Roll No</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr bgcolor="lightgrey">
+                            <td>1</td>
+                            <td>K.Vamshidharreddy</td>
+                            <td>CB.EN.U4AIE22028</td>
+                        </tr>
+                        <tr bgcolor="lightgrey">
+                            <td>2</td>
+                            <td>Surya teja</td>
+                            <td>CB.EN.U4AIE22069</td>
+                        </tr>
+                        <tr bgcolor="lightgrey">
+                            <td>3</td>
+                            <td>Tarun kumar</td>
+                            <td>CB.EN.U4AIE22068</td>
+                        </tr>
+                        <tr bgcolor="lightgrey">
+                            <td>4</td>
+                            <td>Krishna Prasad</td>
+                            <td>CB.EN.U4AIE22070</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+       
+
+    </div>
+
+    <script>
+        const buttons = document.querySelectorAll('.functions button');
+const tabContents = document.querySelectorAll('.tab-content div');
+
+buttons.forEach((button, index) => {
+    button.addEventListener('click', () => {
+        tabContents.forEach((content, i) => {
+            if (i === index) {
+                content.classList.remove('hide');
+                content.classList.add('show');
+            } else {
+                content.classList.add('hide');
+                content.classList.remove('show');
+            }
+        });
+    });
+});
+
+    </script>
+</body>
+</html>
+
